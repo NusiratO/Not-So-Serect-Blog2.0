@@ -11,14 +11,35 @@
 {% block content %}
     <form action="" method="post">
     {{ form.hidden_tag() }}
-    <p>
+    <p class="text-center">
         {{ form.Description.label }}<br>
         {{ form.Description(cols=32, rows=4) }}<br>
         {% for error in form.Description.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
-    <p>{{ form.submit() }}</p>
+    <p class="text-center">
+        {{ form.Day.label }}<br>
+        {{ form.Day(size=32) }}<br>
+        {% for error in form.Day.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+    </p>
+    <p class="text-center">
+            {{ form.Date.label }}<br>
+            {{ form.Date(class='datepicker') }}<br>
+            {% for error in form.Date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+    <p class="text-center">
+            {{ form.Time.label }}<br>
+            {{ form.Time(size=32) }}<br>
+            {% for error in form.Date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+    </p>
+    <p class="text-center">{{ form.submit() }}</p>
     </form>
     {%  for event in events %}
     <p>
