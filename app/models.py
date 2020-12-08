@@ -53,7 +53,7 @@ class SnackingAndSlacking(db.Model):
     Date = db.Column(db.DateTime, index=True)
     SSPost = db.Column(db.String(128))
     Food = db.Column(db.String(64))
-    diningHall_id = db.Column(db.Integer, db.ForeignKey('dinningHall.id'))
+    diningHall_id = db.relationship('DinningHall', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return '<Post {}, {}>'.format(self.SSPost, self.Food)
@@ -61,7 +61,7 @@ class SnackingAndSlacking(db.Model):
 class DinningHall(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String(64))
-    SS_id = db.relationship('SnackingAndSlacking', backref='author', lazy='dynamic')
+    SS_id = db.Column(db.Integer, db.ForeignKey('SnackingAndSlacking.id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.Name)
