@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.date.label }}<br>
+         {% for error in form.date.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.SSpost.label }}<br>
+        {% for error in form.SSpost.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.food.label }}<br>
+        {% for error in form.food.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.diningHall.label }}<br>
+        {% for error in form.diningHall.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+{% endblock %}
