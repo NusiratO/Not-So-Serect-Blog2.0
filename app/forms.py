@@ -42,7 +42,7 @@ class PostForm(FlaskForm):
 class EventForm(FlaskForm):
     Description = TextAreaField('Want to add an event?', validators=[DataRequired(), Length(min=1, max=140)])
     Day = StringField('What is the day?', validators=[DataRequired()])
-    Date = DateField('Date', validators=[DataRequired()], format='%m/%d/%Y')
+    Date = DateField('Date', validators=[DataRequired()], format='%Y-%m-%d')
     Time = StringField('What time?', validators=[DataRequired()])
     submit = SubmitField('Submit')
 

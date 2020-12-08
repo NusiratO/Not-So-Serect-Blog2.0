@@ -4,7 +4,7 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, PostForm
+from app.forms import LoginForm, RegistrationForm, PostForm, EventForm
 from app.models import User, Post, Event, DinningHall, SnackingAndSlacking
 
 
@@ -33,33 +33,76 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
+
 @app.route('/populate')
 def populate():
-    user = User(userName='ebarry', password='valley13', email='ebarry@ithaca.edu', schoolYear='sophmore', schoolName='ComputerScience')
-    user2 = User(userName='Nusi', password='valley1372', email='ebarry334@ithaca.edu', schoolYear='sophmore', schoolName='ComputerScience')
-    db.session.add_all([user, user2])
+    user = User(userName='ebarry', password='valley13', email='ebarry@ithaca.edu', schoolYear='sophmore',
+                schoolName='ComputerScience')
+    user2 = User(userName='Nusi', password='valley1372', email='ebarry334@ithaca.edu', schoolYear='sophmore',
+                 schoolName='ComputerScience')
+    post1 = Post(body='It is a beautiful day on campus today!', user_id=user2.id)
+    post2 = Post(body='I cannot wait for my computer science classes next semester', user_id=user2.id)
+    post3 = Post(body='Dont forget to join the Computer Science club!', user_id=user.id)
+    post4 = Post(body='Join club hockey especially if you are a goalie we graduated two last year', user_id=user.id)
+    post5 = Post(body='The food at Campus center was gas make sure to stop by', user_id=user2.id)
+    post6 = Post(body='Really excited to be on campus next semester', user_id=user.id)
+
+    d = datetime(2021, 2, 20)
+    d2 = datetime(2021, 2, 25)
+    d3 = datetime(2021, 3, 15)
+    d4 = datetime(2021, 3, 12)
+    d5 = datetime(2021, 2, 20)
+    d6 = datetime(2021, 4, 13, 10)
+    d7 = datetime(2021, 4, 14, 12)
+    d8 = datetime(2021, 4, 15, 7)
+    d9 = datetime(2021, 4, 16, 10)
+    d10 = datetime(2021, 4, 17, 2)
+
+    event = Event(Description='There is a varsity basketball game tonight at 9pm. Be there or be Square.', Day='Friday',
+                  Date=d, Time='9pm')
+    event2 = Event(
+        Description='Club sports sign up starts on February 30th make sure to check out all of the club on the club '
+                    'sports website',
+        Day='Friday', Date=d2, Time='7am')
+    event3 = Event(Description='Mens Lacrosse game today at 11am', Day='Wednesday',
+                   Date=d3, Time='11am')
+    event4 = Event(Description='PARTY AT 112 Kendal Street Saturday Night 9pm!!! GET YO DANCE ONNN!!!!', Day='Saturday',
+                   Date=d4, Time='9pm')
+    event5 = Event(Description='There is a varsity basketball game tonight at 9pm. Be there or be Square.',
+                   Day='Saturday', Date=d5, Time='9pm')
+    cc = DinningHall(Name="Campus Center")
+    ter = DinningHall(Name='Terraces')
+
+    food = SnackingAndSlacking(Date=d6, SSPost='Today the breakfast at CC was really good',
+                               Food='pancakes, bacon, eggs')
+    food1 = SnackingAndSlacking(Date=d7, SSPost='I had an amazing lunch after class today. Got myself a grilled '
+                                                'cheese with fries',
+                                Food='Grilled Cheese, Fries')
+    food2 = SnackingAndSlacking(Date=d8, SSPost='Freaking steak dinner at CC tongiht everyone better be there its so '
+                                                'goodddddd!!!',
+                                Food='Steak, Mashed Potatoes, Bread')
+    food3 = SnackingAndSlacking(Date=d9, SSPost='Always gotta get froot loops for breakfast #everymorning',
+                                Food='Froot Loop Cereal ')
+    food4 = SnackingAndSlacking(Date=d10,
+                                SSPost='The subs at terraces are slapping today make sure to get one', Food='Fresh subs')
+    db.session.add_all([user, user2, post1, post2, post3, post4, post5, post6, food, food1, food2, food3, food4, event,
+                        event2, event3, event4, event5, cc, ter])
     db.session.commit()
-    post1 = Post(body='It is a beautiful day on campus today!', userID=user2.id)
-    post2 = Post(body='I cannot wait for my computer science classes next semester', userID=user2.id)
-    post3 = Post(body='Dont forget to join the Computer Science club!', userID=user.id)
-    post4 = Post(body='Join club hockey especially if you are a goalie we graduated two last year', userID=user.id)
-    post5 = Post(body='The food at Campus center was gas make sure to stop by', userID=user2.id)
-    post6 = Post(body='Really excited to be on campus next semester', userID=user.id)
-    db.session.add_all([post1,post2,post3,post4,post5,post6])
-    db.session.commit()
-    event = Event(body='There is a varsity basketball game tonight at 9pm. Be there or be Square.', day='Friday', date=date(2020, 8, 15),  )
+    return render_template('base.html', title='Populated the DataBase with base data')
+
+
 @app.route('/reset_db')
 def reset_db():
-   flash("Resetting database: deleting old data and repopulating with dummy data")
-   # clear all data from all tables
-   meta = db.metadata
-   for table in reversed(meta.sorted_tables):
-       print('Clear table {}'.format(table))
-       db.session.execute(table.delete())
-   db.session.commit()
-   populate()
-   body='Reset the database please log in or register'
-   return render_template('base.html', title='reset', body=body)
+    flash("Resetting database: deleting old data and repopulating with dummy data")
+    # clear all data from all tables
+    meta = db.metadata
+    for table in reversed(meta.sorted_tables):
+        print('Clear table {}'.format(table))
+        db.session.execute(table.delete())
+    db.session.commit()
+    populate()
+    body = 'Reset the database please log in or register'
+    return render_template('base.html', title='reset', body=body)
 
 
 @app.route('/logout')
@@ -86,9 +129,18 @@ def register():
 
 @app.route('/events')
 def events():
-    title = {'title': 'Whats Happening In & Out of IC?'}
-    body = {'body': 'Page is Under Construction. Apologizes in Advance!'}
-    return render_template('events.html', title='Home', user=title, body=body)
+    form = EventForm()
+    if form.validate_on_submit():
+        event = Event(Description=form.Description.data,
+                      Date=form.Date.data,
+                      Day=form.Day.data,
+                      Time=form.Time.data)
+        db.session.add(event)
+        db.session.commit()
+        flash('You post an event!')
+        return redirect(url_for('events'))
+    posts = Event.query.all()
+    return render_template('events.html', title='Home', form=form, posts=posts)
 
 
 @app.route('/Blog', methods=['GET', 'POST'])
@@ -102,6 +154,4 @@ def Blog():
         return redirect(url_for('Blog'))
     posts = Post.query.all()
     return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts)
-
-
 
