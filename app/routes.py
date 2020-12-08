@@ -11,9 +11,18 @@ from app.models import User, Post, Event, DinningHall, SnackingAndSlacking
 @app.route('/')
 @app.route('/home')
 def homepage():
-    title = {'title': 'Whats Happening In & Out of IC?'}
-    body = {'body': 'Page is Under Construction. Apologizes in Advance!'}
-    return render_template('index.html', title='Home', user=title, body=body)
+    form = EventForm()
+    if form.validate_on_submit():
+        event = Event(Description=form.Description.data,
+                      Date=form.Date.data,
+                      Day=form.Day.data,
+                      Time=form.Time.data)
+        db.session.add(event)
+        db.session.commit()
+        flash('You post an event!')
+        return redirect(url_for('events'))
+    posts = Event.query.all()
+    return render_template('events.html', title='Home', form=form, posts=posts)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -36,10 +45,12 @@ def login():
 
 @app.route('/populate')
 def populate():
-    user = User(userName='ebarry', password='valley13', email='ebarry@ithaca.edu', schoolYear='sophmore',
+    user = User(userName='ebarry', email='ebarry@ithaca.edu', schoolYear='sophmore',
                 schoolName='ComputerScience')
-    user2 = User(userName='Nusi', password='valley1372', email='ebarry334@ithaca.edu', schoolYear='sophmore',
+    user2 = User(userName='Nusi', email='ebarry334@ithaca.edu', schoolYear='sophmore',
                  schoolName='ComputerScience')
+    user.set_password('valley13')
+    user2.set_password('valley1372')
     post1 = Post(body='It is a beautiful day on campus today!', user_id=user2.id)
     post2 = Post(body='I cannot wait for my computer science classes next semester', user_id=user2.id)
     post3 = Post(body='Dont forget to join the Computer Science club!', user_id=user.id)
@@ -154,4 +165,6 @@ def Blog():
         return redirect(url_for('Blog'))
     posts = Post.query.all()
     return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts)
+
+
 

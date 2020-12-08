@@ -18,6 +18,7 @@
         <div class="navbar-nav">
             <a class="nav-link active" href="/events">Events<span class="sr-only">(current)</span></a>
             <a class="nav-link active" href="/Blog">Blog</a>
+            <a class="nav-link active" href="/SnackingAndSlacking">Snacking&Slacking</a>
             {% if current_user.is_anonymous %}
             <a class="nav-link" href="/login">Login</a>
             {% else %}
@@ -42,6 +43,14 @@
         {% endif %}
         {% endwith %}
 {% block content %}
+    {% if current_user.is_anonymous %}
+        {%  for post in posts %}
+        <p>
+         {{ post.body }} at {{ post.timestamp }}
+        </p>
+    {% endfor %}
+    {% else %}
+
     <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
@@ -53,11 +62,12 @@
     </p>
     <p>{{ form.submit() }}</p>
     </form>
-    {%  for post in posts %}
-    <p>
+        {%  for post in posts %}
+        <p>
          {{ post.body }} at {{ post.timestamp }}
-    </p>
+        </p>
     {% endfor %}
+    {% endif %}
 {% endblock %}
 </body>
 </html>
