@@ -1,10 +1,11 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from datetime import datetime
 
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, PostForm
-from app.models import User, Post
+from app.models import User, Post, Event, DinningHall, SnackingAndSlacking
 
 
 @app.route('/')
@@ -31,6 +32,34 @@ def login():
             next_page = url_for('login')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/populate')
+def populate():
+    user = User(userName='ebarry', password='valley13', email='ebarry@ithaca.edu', schoolYear='sophmore', schoolName='ComputerScience')
+    user2 = User(userName='Nusi', password='valley1372', email='ebarry334@ithaca.edu', schoolYear='sophmore', schoolName='ComputerScience')
+    db.session.add_all([user, user2])
+    db.session.commit()
+    post1 = Post(body='It is a beautiful day on campus today!', userID=user2.id)
+    post2 = Post(body='I cannot wait for my computer science classes next semester', userID=user2.id)
+    post3 = Post(body='Dont forget to join the Computer Science club!', userID=user.id)
+    post4 = Post(body='Join club hockey especially if you are a goalie we graduated two last year', userID=user.id)
+    post5 = Post(body='The food at Campus center was gas make sure to stop by', userID=user2.id)
+    post6 = Post(body='Really excited to be on campus next semester', userID=user.id)
+    db.session.add_all([post1,post2,post3,post4,post5,post6])
+    db.session.commit()
+    event = Event(body='There is a varsity basketball game tonight at 9pm. Be there or be Square.', day='Friday', date=date(2020, 8, 15),  )
+@app.route('/reset_db')
+def reset_db():
+   flash("Resetting database: deleting old data and repopulating with dummy data")
+   # clear all data from all tables
+   meta = db.metadata
+   for table in reversed(meta.sorted_tables):
+       print('Clear table {}'.format(table))
+       db.session.execute(table.delete())
+   db.session.commit()
+   populate()
+   body='Reset the database please log in or register'
+   return render_template('base.html', title='reset', body=body)
 
 
 @app.route('/logout')

@@ -40,11 +40,13 @@ class Post(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Description = db.Column(db.String(128))
+    body = db.Column(db.String(128))
     Day = db.Column(db.String(28))
     Date = db.Column(db.DateTime, index=True)
     Time = db.Column(db.String(28))
 
+    def __repr__(self):
+        return '<{} on {} at []>'.format(self.body, self.Day, self.Time)
 
 class SnackingAndSlacking(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -53,8 +55,13 @@ class SnackingAndSlacking(db.Model):
     Food = db.Column(db.String(64))
     diningHall_id = db.relationship('DinningHall', backref='author', lazy='dynamic')
 
+    def __repr__(self):
+        return '<Post {}, {}>'.format(self.SSPost, self.Food)
 
 class DinningHall(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String(64))
     SS_id = db.Column(db.Integer, db.ForeignKey('SnackingAndSlacking.id'))
+
+    def __repr__(self):
+        return '<Post {}>'.format(self.Name)
