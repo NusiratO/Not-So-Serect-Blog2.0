@@ -136,3 +136,4 @@ def Blog():
     return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts)
 
 
+
