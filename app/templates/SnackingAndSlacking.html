@@ -1,5 +1,5 @@
-{% extends 'base.html' %}
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     {% if title %}
@@ -9,16 +9,56 @@
     {% endif %}
 </head>
 
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/home"><b>Snacking&Slacking:</b></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-link active" href="/events">Events<span class="sr-only">(current)</span></a>
+            <a class="nav-link active" href="/Blog">Blog</a>
+            <a class="nav-link active" href="/newSnacking">Snacking&Slacking</a>
+            {% if current_user.is_anonymous %}
+            <a class="nav-link" href="/login">Login</a>
+            {% else %}
+                <a class="nav-link" href="/logout">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+
+
+</nav>
+
+<hr>
 {% block content %}
     {% if current_user.is_anonymous %}
-        <title class="text-center">Snacking & Slacking!</title>
+           <div class="jumbotron">
+    <h1 class="text-center display-4">Snacking & Slacking</h1>
+    </div>
+        <br>
+        <div class="row">
         {% for snacking_and_slacking in posts %}
-    <p>
-        <b>{{ snacking_and_slacking.Date }}</b> - {{ snacking_and_slacking.SSPost }}
-    </p>
+            <div class="col-sm-4">
+                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                    <blockquote class="blockquote mb-0">
+                        <p class="text-center">
+                            {{ snacking_and_slacking.SSPost }}
+                        </p>
+                        <footer class="blockquote-footer text-white bg-primary mb-3 text-center">
+                            {{ snacking_and_slacking.Date }}
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
         {% endfor %}
+        </div>
     {% else %}
-        <title class="text-center">Snacking & Slacking!</title>
+         <div class="jumbotron">
+    <h1 class="text-center display-4">Share Your Piece!!</h1>
+    </div>
+        <br>
     <form action="" method="post">
     {{ form.hidden_tag() }}
     <p class="text-center">
@@ -44,10 +84,27 @@
         </p>
     <p class="text-center">{{ form.submit() }}</p>
     </form>
-        {%  for snacking_and_slacking in posts %}
-    <p>
-        <b>{{ snacking_and_slacking.Date }}</b> - {{ snacking_and_slacking.SSPost }}
-    </p>
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+        {% for snacking_and_slacking in posts %}
+            <div class="col-sm-4">
+                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                    <blockquote class="blockquote mb-0">
+                        <p class="text-center">
+                            {{ snacking_and_slacking.SSPost }}
+                        </p>
+                        <footer class="blockquote-footer text-white bg-primary mb-3 text-center">
+                            {{ snacking_and_slacking.Date }}
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
         {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}
+
+</body>
+</html>

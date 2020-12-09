@@ -11,18 +11,9 @@ from app.models import User, Post, Event, DinningHall, SnackingAndSlacking
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
 def homepage():
-    form = EventForm()
-    if form.validate_on_submit():
-        event = Event(Description=form.Description.data,
-                      Date=form.Date.data,
-                      Day=form.Day.data,
-                      Time=form.Time.data)
-        db.session.add(event)
-        db.session.commit()
-        flash('You post an event!')
-        return redirect(url_for('events'))
-    posts = Event.query.all()
-    return render_template('events.html', title='Home', form=form, posts=posts)
+    title = 'Home'
+    post = ''
+    return render_template('home.html', title=title)
 
 
 @app.route('/login', methods=['GET', 'POST'])
