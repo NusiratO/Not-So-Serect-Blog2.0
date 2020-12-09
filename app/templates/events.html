@@ -8,15 +8,22 @@
     {% endif %}
 </head>
 
+<div class="container-md">
 {% block content %}
     <title class="text-center">Share Your Piece!</title>
     {% if current_user.is_anonymous %}
-        {%  for event in posts %}
-    <p>
-         {{ event.Description }} at {{ event.Time }}
-    </p>
-    {% endfor %}
+            {%  for event in posts %}
+                <div class="card w-75">
+                    <div class="card-body">
+                         <h5 class="card-title text-center">{{ event.Day}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted text-center">{{ event.Time }}</h6>
+                        <p class="card-text text-center">{{ event.Description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if form %}
     {% else %}
+
     <form action="" method="post">
     {{ form.hidden_tag() }}
     <p class="text-center">
@@ -49,9 +56,22 @@
     </p>
     <p class="text-center">{{ form.submit() }}</p>
     </form>
-        {%  for event in posts %}
-    <p>
-        <b>{{ event.Day }}</b> - {{ event.Description }}
-    </p>
+            {% endif %}
+        <div class="row">
+            {%  for event in posts %}
+                <div class="col-sm-6">
+                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-body">
+                         <h5 class="card-title text-center">{{ event.Day}}</h5>
+                        <h6 class="card-subtitle mb-2 text-center">{{ event.Time }}</h6>
+                        <p class="card-text text-center">{{ event.Description }}</p>
+                    </div>
+                </div>
+                </div>
+             {% endfor %}
+        </div>
+
+
     {% endif %}
 {% endblock %}
+</div>

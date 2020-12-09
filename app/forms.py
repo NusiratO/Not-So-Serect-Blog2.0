@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, TextAreaField, PasswordField, Bool
     SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
+from wtforms.fields.html5 import DateField
 
 
 class LoginForm(FlaskForm):
@@ -48,8 +49,7 @@ class EventForm(FlaskForm):
 
 
 class SnackingSlackingForm(FlaskForm):
-    Date = DateField('Date', validators=[DataRequired()], format='%m/%d/%Y')
+    Date = DateField('Date', validators=[DataRequired()], format='%Y-%m-%d')
     SSPost = TextAreaField('What is slacking or snacking?', validators=[DataRequired(), Length(min=1, max=140)])
     Food = StringField('Whats the meal', validators=[DataRequired()])
-    diningHall = SelectField('Select Dinning hall', choices=[], coerce=int)
     submit = SubmitField('Submit')
