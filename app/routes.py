@@ -4,12 +4,12 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, PostForm, EventForm
+from app.forms import LoginForm, RegistrationForm, PostForm, EventForm, SnackingSlackingForm
 from app.models import User, Post, Event, DinningHall, SnackingAndSlacking
 
 
 @app.route('/')
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def homepage():
     form = EventForm()
     if form.validate_on_submit():
@@ -95,7 +95,8 @@ def populate():
     food3 = SnackingAndSlacking(Date=d9, SSPost='Always gotta get froot loops for breakfast #everymorning',
                                 Food='Froot Loop Cereal ')
     food4 = SnackingAndSlacking(Date=d10,
-                                SSPost='The subs at terraces are slapping today make sure to get one', Food='Fresh subs')
+                                SSPost='The subs at terraces are slapping today make sure to get one',
+                                Food='Fresh subs')
     db.session.add_all([user, user2, post1, post2, post3, post4, post5, post6, food, food1, food2, food3, food4, event,
                         event2, event3, event4, event5, cc, ter])
     db.session.commit()
@@ -138,7 +139,7 @@ def register():
     return render_template('createAnAccount.html', title='Register', form=form)
 
 
-@app.route('/events')
+@app.route('/events', methods=['GET', 'POST'])
 def events():
     form = EventForm()
     if form.validate_on_submit():
@@ -167,4 +168,16 @@ def Blog():
     return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts)
 
 
-
+@app.route('/newSnacking', methods=['GET', 'POST'])
+def Snacking():
+    form = SnackingSlackingForm()
+    if form.validate_on_submit():
+        snacking = SnackingAndSlacking(SSPost=form.SSPost.data,
+                                       Food=form.Food.data,
+                                       Date=form.Date.data)
+        db.session.add(snacking)
+        db.session.commit()
+        flash('You posted your review for Snacking and Slacking!')
+        return redirect(url_for('Snacking'))
+    posts = SnackingAndSlacking.query.all()
+    return render_template('SnackingAndSlacking.html', title="Snacking and Slacking", form=form, posts=posts)
