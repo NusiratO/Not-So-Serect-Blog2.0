@@ -2,28 +2,40 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     {% if title %}
-    <title class="text-center">{{ title }} - Share Your Piece!</title>
+    <title class="text-center">{{ title }} - What's Happening In & Out of IC?</title>
     {% else %}
-    <title class="text-center">Share Your Piece!</title>
+    <title class="text-center">What's Happening In & Out of IC?</title>
     {% endif %}
 </head>
 
+<hr>
+
 <div class="container-md">
 {% block content %}
-    <title class="text-center">Share Your Piece!</title>
+
     {% if current_user.is_anonymous %}
+        <div class="jumbotron">
+            <h1 class="text-center display-4">What's Happening In & Out of IC?</h1>
+        </div>
+        <br>
+            <div class="row">
             {%  for event in posts %}
-                <div class="card w-75">
+                <div class="col-sm-4">
+                <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
                     <div class="card-body">
                          <h5 class="card-title text-center">{{ event.Day}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted text-center">{{ event.Time }}</h6>
+                        <h6 class="card-subtitle mb-2 text-center">{{ event.Time }}</h6>
                         <p class="card-text text-center">{{ event.Description }}</p>
                     </div>
                 </div>
-            {% endfor %}
-            {% if form %}
+                </div>
+             {% endfor %}
+        </div>
     {% else %}
-
+    <div class="jumbotron">
+    <h1 class="text-center display-4">What's Happening In & Out of IC?</h1>
+    </div>
+        <br>
     <form action="" method="post">
     {{ form.hidden_tag() }}
     <p class="text-center">
@@ -56,10 +68,13 @@
     </p>
     <p class="text-center">{{ form.submit() }}</p>
     </form>
+        <br>
+        <hr>
+        <br>
             {% endif %}
         <div class="row">
             {%  for event in posts %}
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                 <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
                     <div class="card-body">
                          <h5 class="card-title text-center">{{ event.Day}}</h5>
@@ -70,8 +85,5 @@
                 </div>
              {% endfor %}
         </div>
-
-
-    {% endif %}
 {% endblock %}
 </div>

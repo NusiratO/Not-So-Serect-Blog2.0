@@ -24,7 +24,7 @@
         <div class="card-body">
             <h5 class="card-title">Tuesday</h5>
             <p class="card-text">The football team is having a lit party at Danby Rd, Pull thru!! Time: 8pm</p>
-            <a href="events.html" class="btn btn-primary">Campus Event page</a>
+            <a href="{{ url_for('events') }}" class="btn btn-primary">Campus Event page</a>
         </div>
         <div class="card-footer text-muted">
             2 days ago
@@ -39,7 +39,7 @@
         <div class="card-body">
             <h5 class="card-title">Friday</h5>
             <p class="card-text">Terrace mac n cheese ain't it you guys! Taste like rubber!</p>
-            <a href="SnackingAndSlacking.html" class="btn btn-primary">Snacking And Slacking Page</a>
+            <a href="{{ url_for('Snacking') }}" class="btn btn-primary">Snacking And Slacking Page</a>
         </div>
         <div class="card-footer text-muted">
              yesterday
@@ -54,10 +54,55 @@
         <div class="card-body">
             <h5 class="card-title">Wednesday</h5>
             <p class="card-text">Why they assigning massive work for a 3 day weekend! I'm tireddd!!</p>
-            <a href="Blog.html" class="btn btn-primary">Share Your Piece</a>
+            <a href="{{ url_for('Blog') }}" class="btn btn-primary">Share Your Piece</a>
         </div>
         <div class="card-footer text-muted">
              5 days ago
+        </div>
+    </div>
+  </div>
+     <div class="col-sm-6">
+    <div class="card text-center">
+        <div class="card-harder">
+            Campus Event
+      </div>
+        <div class="card-body">
+            <h5 class="card-title">Thursday</h5>
+            <p class="card-text">Club hockey game at 9pm at the Rink. We take on our biggest rivals Cortland help us beat them!!!!</p>
+            <a href="{{ url_for('events') }}" class="btn btn-primary">Campus Event page</a>
+        </div>
+        <div class="card-footer text-muted">
+            1 day ago
+        </div>
+    </div>
+  </div>
+    <div class="col-sm-6">
+    <div class="card text-center">
+        <div class="card-harder">
+            Snacking and Slacking
+      </div>
+        <div class="card-body">
+            <h5 class="card-title">Tuesday</h5>
+            <p class="card-text">I had a freaking blast at Campus Center today. I got eggs and ham it was soooooo goooddddd 8/10 </p>
+            <a href="{{ url_for('Snacking') }}" class="btn btn-primary">Snacking and Slacking</a>
+        </div>
+        <div class="card-footer text-muted">
+            1 days ago
+        </div>
+    </div>
+  </div>
+    <div class="col-sm-6">
+    <div class="card text-center">
+        <div class="card-harder">
+            Share your Piece
+      </div>
+        <div class="card-body">
+            <h5 class="card-title">Monday</h5>
+            <p class="card-text">My Computer Science professor came in clutch today and cancelled the final exam. it was out of left field I couldnt believe it.</p>
+            <a href="{{ url_for('Blog') }}" class="btn btn-primary">Share your piece</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
         </div>
     </div>
   </div>
