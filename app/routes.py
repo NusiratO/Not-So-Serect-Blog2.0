@@ -4,25 +4,16 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, PostForm, EventForm, SnackingSlackingForm
-from app.models import User, Post, Event, DinningHall, SnackingAndSlacking
+from app.forms import LoginForm, RegistrationForm, PostForm, EventForm, SnackingSlackingForm, Comment
+from app.models import User, Post, Event, DinningHall, SnackingAndSlacking, Comments
 
 
 @app.route('/')
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/home')
 def homepage():
-    form = EventForm()
-    if form.validate_on_submit():
-        event = Event(Description=form.Description.data,
-                      Date=form.Date.data,
-                      Day=form.Day.data,
-                      Time=form.Time.data)
-        db.session.add(event)
-        db.session.commit()
-        flash('You post an event!')
-        return redirect(url_for('events'))
-    posts = Event.query.all()
-    return render_template('events.html', title='Home', form=form, posts=posts)
+    title = 'Home'
+    post = ''
+    return render_template('home.html', title=title)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -100,6 +91,63 @@ def populate():
     db.session.add_all([user, user2, post1, post2, post3, post4, post5, post6, food, food1, food2, food3, food4, event,
                         event2, event3, event4, event5, cc, ter])
     db.session.commit()
+    user = User(userName='ebarry', password_hash='valley13', email='ebarry@ithaca.edu', schoolYear='sophmore', schoolName='ComputerScience')
+    user2 = User(userName='Nusi', password_hash='valley1372', email='ebarry334@ithaca.edu', schoolYear='sophmore', schoolName='ComputerScience')
+    db.session.add_all([user, user2])
+    db.session.commit()
+    post1 = Post(body='It is a beautiful day on campus today!', userID=user2.id)
+    post2 = Post(body='I cannot wait for my computer science classes next semester', userID=user2.id)
+    post3 = Post(body='Dont forget to join the Computer Science club!', userID=user.id)
+    post4 = Post(body='Join club hockey especially if you are a goalie we graduated two last year', userID=user.id)
+    post5 = Post(body='The food at Campus center was gas make sure to stop by', userID=user2.id)
+    post6 = Post(body='Really excited to be on campus next semester', userID=user.id)
+    db.session.add_all([post1,post2,post3,post4,post5,post6])
+    db.session.commit()
+    event = Event(body='There is a varsity basketball game tonight at 9pm. Be there or be Square.', day='Friday',
+                  date=date(2021, 2, 20), time='9pm')
+    event2 = Event(
+        body='Club sports sign up starts on February 30th make sure to check out all of the club on the club sports website ',
+        day='Friday',
+        date=date(2021, 2, 30), time='7am')
+    event3 = Event(body='Mens Lacrosse game today at 11am', day='Wednesday',
+                   date=date(2021, 3, 15), time='11am')
+    event4 = Event(body='PARTY AT 112 Kendal Street Saturday Night 9pm!!! GET YO DANCE ONNN!!!!', day='Saturday',
+                   date=date(2021, 3, 12), time='9pm')
+    event5 = Event(body='There is a varsity basketball game tonight at 9pm. Be there or be Square.', day='Saturday ',
+                   date=date(2021, 2, 20), time='9pm')
+    db.session.add_all([event, event2, event3, event4, event5])
+    db.session.commit()
+    cc = DinningHall(name="Campus Center")
+    ter = DinningHall(name='Terraces')
+    db.session.add_all([cc, ter])
+    db.commit()
+    food = SnackingAndSlacking(date=datetime(datetime(2021, 4, 13, 10)),
+                               SSpost='Today the breakfast at CC was really good', Food='pancakes, bacon, eggs',
+                               diningHall_id=cc.id)
+    food1 = SnackingAndSlacking(date=datetime(datetime(2021, 4, 14, 12)),
+                                SSpost='I had an amazing lunch after class today. Got myself a grilled cheese with fries',
+                                Food='Grilled Cheese, Fries',
+                                diningHall_id=ter.id)
+    food2 = SnackingAndSlacking(date=datetime(datetime(2021, 4, 15, 7)),
+                                SSpost='Freaking steak dinner at CC tongiht everyone better be there its so goodddddd!!!',
+                                Food='Steak, Mashed Potatoes, Bread',
+                                diningHall_id=cc.id)
+    food3 = SnackingAndSlacking(date=datetime(datetime(2021, 4, 16, 10)),
+                                SSpost='Always gotta get froot loops for breakfast #everymorning ',
+                                Food='Froot Loop Cereal ',
+                                diningHall_id=cc.id)
+    food4 = SnackingAndSlacking(date=datetime(datetime(2021, 4, 17, 2)),
+                                SSpost='The subs at terraces are slapping today make sure to get one',
+                                Food='Fresh subs',
+                                diningHall_id=ter.id)
+    db.session.add_all([food, food1, food2, food3, food4])
+    db.commit()
+    comment1 = Comments(post='This was a really good post.', userID=user.id, postID=post6.id)
+    comment2 = Comments(post='I dislike this post', userID=user.id, postID=post4.id)
+    comment3 = Comments(post='This was a really good post. Love to see it', userID=user2.id, postID=post2.id)
+    comment4 = Comments(post='Hey how are you!!', userID=user2.id, postID=post1.id)
+    db.session.add_all([comment1,comment2,comment3,comment4])
+    db.commit()
     return render_template('base.html', title='Populated the DataBase with base data')
 
 
@@ -158,6 +206,7 @@ def events():
 @app.route('/Blog', methods=['GET', 'POST'])
 def Blog():
     form = PostForm()
+    comment = Comment()
     if form.validate_on_submit():
         post = Post(body=form.post.data)
         db.session.add(post)
@@ -165,7 +214,8 @@ def Blog():
         flash('You post your blog on the board!')
         return redirect(url_for('Blog'))
     posts = Post.query.all()
-    return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts)
+    comments = Comments.query.all()
+    return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts, commentForm=comment, comments=comments)
 
 
 @app.route('/newSnacking', methods=['GET', 'POST'])

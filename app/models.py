@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     schoolYear = db.Column(db.String(128))
     schoolName = db.Column(db.String(128))
     post = db.relationship('Post', backref='author', lazy='dynamic')
-
+    comments = db.relationship("Comments", backref='author', lazy='dynamic')
     def __repr__(self):
         return '<User {}>'.format(self.userName)
 
@@ -33,7 +33,7 @@ class Post(db.Model):
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    comments = db.relationship("Comments", backref='author', lazy='dynamic')
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
@@ -62,6 +62,15 @@ class SnackingAndSlacking(db.Model):
 class DinningHall(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Name = db.Column(db.String(64))
+
+    def __repr__(self):
+        return '<Post {}>'.format(self.Name)
+
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    post = db.Column(db.String(128))
+    userID = db.Column(db.Integer, db.foreign_key("user.id"))
+    PostID = db.Column(db.Integer, db.foreign_key("post.id"))
 
     def __repr__(self):
         return '<Post {}>'.format(self.Name)

@@ -53,3 +53,8 @@ class SnackingSlackingForm(FlaskForm):
     SSPost = TextAreaField('What is slacking or snacking?', validators=[DataRequired(), Length(min=1, max=140)])
     Food = StringField('Whats the meal', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class Comment(FlaskForm):
+    Post = TextAreaField('What would you like to comment?', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField("Post")
+

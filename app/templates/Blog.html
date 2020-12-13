@@ -65,6 +65,16 @@
         {%  for post in posts %}
         <p>
          {{ post.body }} at {{ post.timestamp }}
+            {% for comment in comments %}
+            {% if post.id==comment.PostId %}
+            {{ comment.post }} by {{ comment.userID }}
+            {% endif %}
+        {% endfor %}
+        {{ commentForm.post.label }}
+        {% for error in commentForm.post.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {{ commentForm.submit() }}
         </p>
     {% endfor %}
     {% endif %}
