@@ -1,0 +1,32 @@
+.jumbotron {
+    background-color: blue;
+    text-align: center;
+    color: gold;
+    font-family: fantasy;
+    font-size: larger;
+    margin-left: auto;
+}
+
+.title{
+    background-color: blue;
+    text-align: center;
+    color: gold;
+    font-family: fantasy;
+    font-size: larger;
+    margin-left: auto;
+}
+
+.navbar{
+    background-color: silver!important;
+    color: gold;
+}
+
+navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+    color: gold!important;
+}
+.card{
+    background-color: silver!important;
+    color: blue!important;
+    text-align: center;
+    margin-bottom: 100px;
+}

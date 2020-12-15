@@ -33,16 +33,16 @@
             {% endfor %}
         </p>
         <p class="text-center">
-            {{ form.studentYear.label }}<br>
-            {{ form.studentYear(size=64) }}<br>
-            {% for error in form.studentYear.errors %}
+            {{ form.student_year.label }}<br>
+            {{ form.student_year(size=64) }}<br>
+            {% for error in form.student_year.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p class="text-center">
-            {{ form.schoolName.label }}<br>
-            {{ form.schoolName(size=64) }}<br>
-            {% for error in form.schoolName.errors %}
+            {{ form.school_name.label }}<br>
+            {{ form.school_name(size=64) }}<br>
+            {% for error in form.school_name.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>

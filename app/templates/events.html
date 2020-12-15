@@ -23,9 +23,9 @@
                 <div class="col-sm-4">
                 <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
                     <div class="card-body">
-                         <h5 class="card-title text-center">{{ event.Day}}</h5>
-                        <h6 class="card-subtitle mb-2 text-center">{{ event.Time }}</h6>
-                        <p class="card-text text-center">{{ event.Description }}</p>
+                         <h5 class="card-title text-center">{{ event.day}}</h5>
+                        <h6 class="card-subtitle mb-2 text-center">{{ event.time }}</h6>
+                        <p class="card-text text-center">{{ event.description }}</p>
                     </div>
                 </div>
                 </div>
@@ -39,30 +39,30 @@
     <form action="" method="post">
     {{ form.hidden_tag() }}
     <p class="text-center">
-        {{ form.Description.label }}<br>
-        {{ form.Description(cols=32, rows=4) }}<br>
-        {% for error in form.Description.errors %}
+        {{ form.description.label }}<br>
+        {{ form.description(cols=32, rows=4) }}<br>
+        {% for error in form.description.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
     <p class="text-center">
-        {{ form.Day.label }}<br>
-        {{ form.Day(size=32) }}<br>
-        {% for error in form.Day.errors %}
+        {{ form.day.label }}<br>
+        {{ form.day(size=32) }}<br>
+        {% for error in form.day.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
     </p>
     <p class="text-center">
-            {{ form.Date.label }}<br>
-            {{ form.Date(class='datepicker') }}<br>
-            {% for error in form.Date.errors %}
+            {{ form.date.label }}<br>
+            {{ form.date(class='datepicker') }}<br>
+            {% for error in form.date.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
     <p class="text-center">
-            {{ form.Time.label }}<br>
-            {{ form.Time(size=32) }}<br>
-            {% for error in form.Date.errors %}
+            {{ form.time.label }}<br>
+            {{ form.time(size=32) }}<br>
+            {% for error in form.date.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
     </p>
@@ -77,9 +77,9 @@
                 <div class="col-sm-4">
                 <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
                     <div class="card-body">
-                         <h5 class="card-title text-center">{{ event.Day}}</h5>
-                        <h6 class="card-subtitle mb-2 text-center">{{ event.Time }}</h6>
-                        <p class="card-text text-center">{{ event.Description }}</p>
+                         <h5 class="card-title text-center">{{ event.day}}</h5>
+                        <h6 class="card-subtitle mb-2 text-center">{{ event.time }}</h6>
+                        <p class="card-text text-center">{{ event.description }}</p>
                     </div>
                 </div>
                 </div>

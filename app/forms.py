@@ -30,8 +30,8 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    studentYear = StringField('What is year?', validators=[DataRequired()])
-    schoolName = StringField('What is your school?', validators=[DataRequired()])
+    student_year = StringField('What is year?', validators=[DataRequired()])
+    school_name = StringField('What is your school?', validators=[DataRequired()])
     submit = SubmitField('Register')
 
 
@@ -41,20 +41,21 @@ class PostForm(FlaskForm):
 
 
 class EventForm(FlaskForm):
-    Description = TextAreaField('Want to add an event?', validators=[DataRequired(), Length(min=1, max=140)])
-    Day = StringField('What is the day?', validators=[DataRequired()])
-    Date = DateField('Date', validators=[DataRequired()], format='%Y-%m-%d')
-    Time = StringField('What time?', validators=[DataRequired()])
+    description = TextAreaField('Want to add an event?', validators=[DataRequired(), Length(min=1, max=140)])
+    day = StringField('What is the day?', validators=[DataRequired()])
+    date = DateField('date', validators=[DataRequired()], format='%Y-%m-%d')
+    time = StringField('What time?', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
 class SnackingSlackingForm(FlaskForm):
-    Date = DateField('Date', validators=[DataRequired()], format='%Y-%m-%d')
-    SSPost = TextAreaField('What is slacking or snacking?', validators=[DataRequired(), Length(min=1, max=140)])
-    Food = StringField('Whats the meal', validators=[DataRequired()])
+    date = DateField('date', validators=[DataRequired()], format='%Y-%m-%d')
+    snacking_and_slacking_post = TextAreaField('What is slacking or snacking?', validators=[DataRequired(), Length(min=1, max=140)])
+    food = StringField('Whats the meal', validators=[DataRequired()])
+    selectDinning = SelectField('Select a dininghall', choices=[], coerce=int)
     submit = SubmitField('Submit')
 
-class Comment(FlaskForm):
-    Post = TextAreaField('What would you like to comment?', validators=[DataRequired(), Length(min=1, max=140)])
-    submit = SubmitField("Post")
 
+class CommentForm(FlaskForm):
+    post = TextAreaField('What would you like to comment?', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField("Post")
