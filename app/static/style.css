@@ -30,3 +30,16 @@ navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-
     text-align: center;
     margin-bottom: 100px;
 }
+
+.btn{
+    color: gold!important;
+    justify-content: center;
+    text-align: center;
+    border: 3px solid gold!important;
+    margin-left: 700px!important;
+}
+
+.card-body{
+    text-align: center;
+    justify-content: center!important;
+}

@@ -70,17 +70,34 @@
     <h1 class="text-center display-4">Share Your Piece!!</h1>
     </div>
     <br>
-    <form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p class="text-center">
-        {{ form.post.label }}<br>
-        {{ form.post(cols=32, rows=4) }}<br>
-        {% for error in form.post.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p class="text-center">{{ form.submit() }}</p>
-    </form>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Share Your Piece!
+        </button>
+
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Share Your Piece!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            {{ form.hidden_tag() }}
+                            <p class="text-center">
+                                {{ form.post.label }}<br>
+                                {{ form.post(cols=32, rows=4) }}<br>
+                                {% for error in form.post.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                            <p class="text-center">{{ form.submit() }}</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <br>
         <hr>
         <br>

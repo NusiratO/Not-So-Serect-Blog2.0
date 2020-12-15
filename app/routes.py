@@ -21,7 +21,7 @@ def login():
         return redirect(url_for('homepage'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(userName=form.username.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
@@ -167,7 +167,6 @@ def Blog():
     comments = Comment.query.all()
     return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts, commentForm=comment,
                            comments=comments)
-
 
 
 @app.route('/newSnacking', methods=['GET', 'POST'])

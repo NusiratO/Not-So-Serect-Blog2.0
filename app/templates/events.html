@@ -32,47 +32,65 @@
              {% endfor %}
         </div>
     {% else %}
+
     <div class="jumbotron">
     <h1 class="text-center display-4">What's Happening In & Out of IC?</h1>
     </div>
         <br>
-    <form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p class="text-center">
-        {{ form.description.label }}<br>
-        {{ form.description(cols=32, rows=4) }}<br>
-        {% for error in form.description.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p class="text-center">
-        {{ form.day.label }}<br>
-        {{ form.day(size=32) }}<br>
-        {% for error in form.day.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-    </p>
-    <p class="text-center">
-            {{ form.date.label }}<br>
-            {{ form.date(class='datepicker') }}<br>
-            {% for error in form.date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-    <p class="text-center">
-            {{ form.time.label }}<br>
-            {{ form.time(size=32) }}<br>
-            {% for error in form.date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-    </p>
-    <p class="text-center">{{ form.submit() }}</p>
-    </form>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Add an event!
+        </button>
+
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Want to add an event?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            {{ form.hidden_tag() }}
+                            <p class="text-center">
+                                {{ form.description.label }}<br>
+                                {{ form.description(cols=32, rows=4) }}<br>
+                                {% for error in form.description.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                            <p class="text-center">
+                                {{ form.day.label }}<br>
+                                {{ form.day(size=32) }}<br>
+                                {% for error in form.day.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                            <p class="text-center">
+                                {{ form.date.label }}<br>
+                                {{ form.date(class='datepicker') }}<br>
+                                {% for error in form.date.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                             </p>
+                            <p class="text-center">
+                                {{ form.time.label }}<br>
+                                {{ form.time(size=32) }}<br>
+                                {% for error in form.date.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                            <p class="text-center">{{ form.submit() }}</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <br>
         <hr>
         <br>
             {% endif %}
-        <div class="row">
+        <div class="row center-block">
             {%  for event in posts %}
                 <div class="col-sm-4">
                 <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
