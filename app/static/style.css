@@ -35,11 +35,13 @@ navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-
     color: gold!important;
     justify-content: center;
     text-align: center;
-    border: 3px solid gold!important;
-    margin-left: 700px!important;
+    border: 5px solid gold!important;
+
 }
 
 .card-body{
     text-align: center;
     justify-content: center!important;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+
 }

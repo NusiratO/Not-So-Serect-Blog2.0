@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/home"><b>Share Your Piece:</b></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="true" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -55,7 +55,7 @@
             <div class="card-body text-white bg-primary mb-3" style="max-width: 18rem;">
             <blockquote class="blockquote mb-0">
                 <p class="text-center">
-                    {{ post.body }}
+                    <b><a href = "{{ url_for('postComment',id=post.id) }}">{{ post.body }}</a></b>
                 </p>
                 <footer class="blockquote-footer text-white bg-primary mb-3">
                     {{moment(post.timestamp).format('LLL')}}
@@ -63,6 +63,11 @@
             </blockquote>
         </div>
             </div>
+            {% for comment in comments %}
+                <p class="text-center">
+                    {{ comment.message }}
+                </p>
+                {% endfor %}
         {% endfor %}
     </div>
     {% else %}
@@ -70,9 +75,12 @@
     <h1 class="text-center display-4">Share Your Piece!!</h1>
     </div>
     <br>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Share Your Piece!
-        </button>
+         <div class="d-grid gap-2 col-2 mx-auto">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                Share Your Piece!
+            </button>
+         </div>
+
 
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -115,10 +123,10 @@
             </blockquote>
         </div>
             </div>
-
         {% endfor %}
 
     </div>
     {% endif %}
 {% endblock %}
+
 </body>

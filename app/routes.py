@@ -6,13 +6,22 @@ from datetime import datetime
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, PostForm, EventForm, SnackingSlackingForm, CommentForm
 from app.models import User, Post, Event, DinningHall, SnackingAndSlacking, Comment
+import requests
 
 
 @app.route('/')
 @app.route('/home')
 def homepage():
     title = 'Home'
-    return render_template('home.html', title=title)
+    events = Event.query.all()
+    posts = Post.query.all()
+    reviews = SnackingAndSlacking.query.all()
+    r = requests.get(
+        "http://api.openweathermap.org/data/2.5/weather?zip=14850,us&appid=475b2c8051316db693d4f475ff9614f9")
+    text = r.json()
+    temp = float(text['main']['temp'])
+    temp_f = (temp - 273.15) * (9 / 5) + 32
+    return render_template('home.html', title=title, temp_f=int(temp_f), events=events, posts=posts, reviews=reviews)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -172,6 +181,7 @@ def Blog():
 @app.route('/newSnacking', methods=['GET', 'POST'])
 def Snacking():
     form = SnackingSlackingForm()
+    form.selectDinning.choices = [(v.id, v.name) for v in DinningHall.query.all()]
     if form.validate_on_submit():
         snacking = SnackingAndSlacking(snacking_and_slacking_post=form.snacking_and_slacking_post.data,
                                        food=form.food.data,

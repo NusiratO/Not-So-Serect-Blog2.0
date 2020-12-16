@@ -33,6 +33,7 @@
 <hr>
 {% block content %}
     {% if current_user.is_anonymous %}
+
            <div class="jumbotron">
     <h1 class="text-center display-4">Snacking & Slacking</h1>
     </div>
@@ -60,9 +61,12 @@
         <br>
 
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            What is slacking or snacking?!
-        </button>
+         <div class="d-grid gap-2 col-2 mx-auto">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                What is slacking or snacking?!
+            </button>
+         </div>
+
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -125,6 +129,7 @@
                         <footer class="blockquote-footer text-white bg-primary mb-3 text-center">
                             {{ snacking_and_slacking.date }}
                         </footer>
+
                     </blockquote>
                 </div>
             </div>
