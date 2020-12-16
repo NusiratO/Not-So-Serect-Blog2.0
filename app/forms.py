@@ -57,5 +57,5 @@ class SnackingSlackingForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    post = TextAreaField('What would you like to comment?', validators=[DataRequired(), Length(min=1, max=140)])
+    message = TextAreaField('What would you like to comment?', validators=[DataRequired(), Length(min=1, max=140)])
     submit = SubmitField("Post")

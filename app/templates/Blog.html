@@ -55,19 +55,32 @@
             <div class="card-body text-white bg-primary mb-3" style="max-width: 18rem;">
             <blockquote class="blockquote mb-0">
                 <p class="text-center">
-                    <b><a href = "{{ url_for('postComment',id=post.id) }}">{{ post.body }}</a></b>
+                    {{ post.body }}
                 </p>
                 <footer class="blockquote-footer text-white bg-primary mb-3">
-                    {{moment(post.timestamp).format('LLL')}}
+                    {{ post.timestamp }}
                 </footer>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Comments Section
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content comment-modal">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Comment Section</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                    {% for comment in post.comments %}
+                                        {{ comment }}
+                                    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </blockquote>
         </div>
             </div>
-            {% for comment in comments %}
-                <p class="text-center">
-                    {{ comment.message }}
-                </p>
-                {% endfor %}
         {% endfor %}
     </div>
     {% else %}
@@ -119,7 +132,38 @@
                 </p>
                 <footer class="blockquote-footer text-white bg-primary mb-3">
                     {{ post.timestamp }}
+
                 </footer>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Comments Section
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content comment-modal">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Comment Section</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                    {% for comment in post.comments %}
+                                        {{ comment }}
+                                    {% endfor %}
+                                <form action="" method="post">
+                                    {{ form2.hidden_tag() }}
+                                    <p class="text-center">
+                                        {{ form2.message.label }}<br>
+                                        {{ form2.message(cols=32, rows=4) }}<br>
+                                        {% for error in form2.message.errors %}
+                                            <span style="color: red;">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </p>
+                                    <p class="text-center">{{ form2.submit() }}</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </blockquote>
         </div>
             </div>

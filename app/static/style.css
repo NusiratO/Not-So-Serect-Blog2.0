@@ -45,3 +45,14 @@ navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 
 }
+
+.comment-modal{
+    background-color: silver;
+}
+
+.background {
+    background-image: url("https://cdn.discordapp.com/attachments/775735708370337823/788780272485007421/9k.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

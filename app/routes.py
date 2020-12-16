@@ -166,16 +166,24 @@ def events():
 def Blog():
     form = PostForm()
     comment = Comment()
+    form2 = CommentForm()
     if form.validate_on_submit():
         post = Post(body=form.post.data)
         db.session.add(post)
         db.session.commit()
         flash('You post your blog on the board!')
         return redirect(url_for('Blog'))
+    if form2.validate_on_submit():
+        newcomments = Comment(message=form2.message.data)
+        db.session.add(newcomments)
+        db.session.commit()
+        flash('You added a comment!')
+        return redirect(url_for('Blog'))
+
     posts = Post.query.all()
     comments = Comment.query.all()
     return render_template('Blog.html', title="Share Your Piece", form=form, posts=posts, commentForm=comment,
-                           comments=comments)
+                           comments=comments, form2=form2)
 
 
 @app.route('/newSnacking', methods=['GET', 'POST'])
@@ -196,3 +204,4 @@ def Snacking():
         return redirect(url_for('Snacking'))
     posts = SnackingAndSlacking.query.all()
     return render_template('SnackingAndSlacking.html', title="Snacking and Slacking", form=form, posts=posts)
+
